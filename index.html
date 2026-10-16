@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Party Picks | Birthday Invitation Maker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="jollibee">
+
+    <header>
+        <a href="index.html" class="logo">🍔 Party Picks</a>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="about.html">About</a>
+        </nav>
+    </header>
+
+    <div id="funny-alert" class="funny-alert">
+        <button class="close-alert" onclick="closeFunnyAlert()">×</button>
+        <h3 id="alert-title">🎉 CONGRATULATIONS!</h3>
+        <p id="alert-message">Nanalo ka ng libreng pagkain!</p>
+        <button onclick="closeFunnyAlert()">INTERESADO AKO!</button>
+    </div>
+
+    <section class="hero">
+        <p>YOUR PARTY STARTS HERE</p>
+
+        <h1>LETS<br><span>MAKE YOUR DAY EXTRA SPECIAL!</span></h1>
+
+        <p>
+            Choose your favorite restaurant theme, create your birthday invitation,
+            and celebrate with your favorite people!
+        </p>
+
+        <div class="hero-pictures">
+            <img src="micah.jpg" alt="Micah Tallod">
+            <img src="booc.jpg" alt="John Allan Booc">
+            <img src="hanns.jpg" alt="Hanns Peru">
+        </div>
+
+        <a href="#restaurants" class="button">Choose Your Party Theme</a>
+    </section>
+
+    <section class="quick-links">
+        <a href="#restaurants" class="quick-card">
+            <h2>🍟</h2>
+            <p>Choose a Restaurant</p>
+        </a>
+
+        <a href="#invitation" class="quick-card">
+            <h2>💌</h2>
+            <p>Create an Invitation</p>
+        </a>
+
+        <a href="gallery.html" class="quick-card">
+            <h2>📸</h2>
+            <p>View Our Gallery</p>
+        </a>
+
+        <a href="about.html" class="quick-card">
+            <h2>🎂</h2>
+            <p>ANG MGA BIDA BIDA</p>
+        </a>
+    </section>
+
+    <section class="section" id="restaurants">
+        <h2>Pick Your Favorite Restaurant!</h2>
+        <p class="center">Choose a theme to change the look of your birthday invitation.</p>
+
+        <div class="restaurant-list">
+
+            <div class="restaurant">
+                <h3>🐝 Jollibee</h3>
+                <p>Sweet celebrations and happy memories!</p>
+                <button onclick="changeTheme('jollibee')">Choose Jollibee</button>
+                <a href="https://www.jollibee.com.ph/" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
+            </div>
+
+            <div class="restaurant">
+                <h3>🍟 McDonald's</h3>
+                <p>I'm lovin' this birthday celebration!</p>
+                <button onclick="changeTheme('mcdo')">Choose McDonald's</button>
+                <a href="https://www.mcdonalds.com.ph/" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
+            </div>
+
+            <div class="restaurant">
+                <h3>🍗 Mang Inasal</h3>
+                <p>Grilled goodness for your special day!</p>
+                <button onclick="changeTheme('manginasal')">Choose Mang Inasal</button>
+                <a href="https://www.manginasal.ph/" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
+            </div>
+
+            <div class="restaurant">
+                <h3>🍗 Bonchon</h3>
+                <p>Crunchy bites and a crispy celebration!</p>
+                <button onclick="changeTheme('bonchon')">Choose Bonchon</button>
+                <a href="https://bonchon.com.ph/" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
+            </div>
+
+            <div class="restaurant">
+                <h3>🍗 KFC</h3>
+                <p>Finger lickin' good birthday moments!</p>
+                <button onclick="changeTheme('kfc')">Choose KFC</button>
+                <a href="https://www.kfc.com.ph/" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
+            </div>
+
+            <div class="restaurant">
+                <h3>🥡 Chowking</h3>
+                <p>Chinese-style favorites for your party!</p>
+                <button onclick="changeTheme('chowking')">Choose Chowking</button>
+                <a href="https://www.chowking.ph/" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section invitation-section" id="invitation">
+        <h2>Create Your Birthday Invitation 💌</h2>
+        <p class="center">Fill in the details and see your invitation preview!</p>
+
+        <div class="invitation-layout">
+
+            <form id="birthday-form">
+                <label for="birthday-name">Birthday Celebrant</label>
+                <input type="text" id="birthday-name" placeholder="Enter the celebrant's name" required>
+
+                <label for="birthday-age">Age</label>
+                <input type="number" id="birthday-age" placeholder="Enter the age" min="1" required>
+
+                <label for="birthday-date">Date</label>
+                <input type="date" id="birthday-date" required>
+
+                <label for="birthday-time">Time</label>
+                <input type="time" id="birthday-time" required>
+
+                <label for="birthday-place">Venue</label>
+                <input type="text" id="birthday-place" placeholder="Enter the party venue" required>
+
+                <label for="birthday-message">Invitation Message</label>
+                <textarea id="birthday-message" rows="4" placeholder="Write your invitation message here..."></textarea>
+
+                <button type="submit">Create My Invitation 🎉</button>
+            </form>
+
+            <div class="preview" id="invitation-preview">
+                <p>YOU'RE INVITED TO</p>
+                <h2>🎂 A Birthday Party! 🎂</h2>
+                <hr>
+
+                <h3 id="show-name">Birthday Celebrant</h3>
+                <p>Turning <b id="show-age">?</b> years old!</p>
+
+                <hr>
+
+                <p><b>📅 Date:</b> <span id="show-date">To be announced</span></p>
+                <p><b>⏰ Time:</b> <span id="show-time">To be announced</span></p>
+                <p><b>📍 Venue:</b> <span id="show-place">To be announced</span></p>
+
+                <hr>
+
+                <p id="show-message">Come and celebrate this special day with us!</p>
+
+                <p>We hope to see you there! 💗</p>
+
+                <button type="button" onclick="copyInvitation()">Copy Invitation</button>
+                <p id="copy-status"></p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Party Picks | Made with 💗 for fun birthday celebrations</p>
+    </footer>
+
+    <script>
+        let alertCount = 0;
+
+        const funnyTitles = [
+            "🚨 MAY ALAM AKONG MASARAP!",
+            "🍗 MALAMAN!",
+            "🕵️ MALASA AT MALINAMNAM!",
+            "🎁 INTERESADO AKO!"
+        ];
+
+        const funnyMessages = [
+          "Gusto mo ng matigas sa labas pero malambot sa loob? Order ka na ng chicken! 😏",
+          "Mas gusto mo ba ng mabilis o mabagal? Sa delivery, siyempre. Pili ka ng express o regular.",
+          "Mahilig ka ba sa malaki? May large bucket kami para sa'yo. Baka hindi mo kayanin ubusin mag-isa. 😭",
+          "Gusto mo bang ulit-ulitin hanggang mabusog ka? Unli rice na 'to, beh. Sulitin mo habang mainit pa."
+];
+
+        function changeTheme(theme) {
+            document.body.className = theme;
+        }
+
+        function showIllegalAlert() {
+            const alertBox = document.getElementById("illegal-alert");
+
+            if (alertCount < 4) {
+                const randomNumber = Math.floor(Math.random() * funnyMessages.length);
+
+                document.getElementById("alert-title").textContent = funnyTitles[randomNumber];
+                document.getElementById("alert-message").textContent = funnyMessages[randomNumber];
+
+                alertBox.style.display = "block";
+                alertCount++;
+
+                setTimeout(function() {
+                    alertBox.style.display = "none";
+                }, 5000);
+            }
+        }
+
+        function closeIllegalAlert() {
+            document.getElementById("illegal-alert").style.display = "none";
+        }
+
+        document.getElementById("birthday-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            document.getElementById("show-name").textContent =
+                document.getElementById("birthday-name").value;
+
+            document.getElementById("show-age").textContent =
+                document.getElementById("birthday-age").value;
+
+            document.getElementById("show-date").textContent =
+                document.getElementById("birthday-date").value;
+
+            document.getElementById("show-time").textContent =
+                document.getElementById("birthday-time").value;
+
+            document.getElementById("show-place").textContent =
+                document.getElementById("birthday-place").value;
+
+            const message = document.getElementById("birthday-message").value;
+
+            document.getElementById("show-message").textContent =
+                message || "Come and celebrate this special day with us!";
+
+            document.getElementById("copy-status").textContent =
+                "Your invitation has been created! 🎉";
+        });
+
+        function copyInvitation() {
+            const invitationText =
+                "YOU'RE INVITED TO A BIRTHDAY PARTY!\n\n" +
+                "Celebrant: " + document.getElementById("show-name").textContent + "\n" +
+                "Age: " + document.getElementById("show-age").textContent + "\n" +
+                "Date: " + document.getElementById("show-date").textContent + "\n" +
+                "Time: " + document.getElementById("show-time").textContent + "\n" +
+                "Venue: " + document.getElementById("show-place").textContent + "\n\n" +
+                document.getElementById("show-message").textContent;
+
+            const temporaryTextArea = document.createElement("textarea");
+            temporaryTextArea.value = invitationText;
+            temporaryTextArea.style.position = "fixed";
+            temporaryTextArea.style.left = "-9999px";
+            document.body.appendChild(temporaryTextArea);
+            temporaryTextArea.select();
+
+            const copied = document.execCommand("copy");
+            document.body.removeChild(temporaryTextArea);
+
+            document.getElementById("copy-status").textContent =
+                copied ? "Invitation copied! 💌" : "Please select and copy the invitation text manually.";
+        }
+
+        setTimeout(showFunnyAlert, 1500);
+
+        setInterval(function() {
+            showFunnyAlert();
+        }, 15000);
+    </script>
+
+</body>
+</html>
+
