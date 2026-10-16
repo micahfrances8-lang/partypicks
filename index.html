@@ -12,7 +12,6 @@
 
     <header>
         <a href="index.html" class="logo">🍔 Party Picks</a>
-
         <nav>
             <a href="index.html">Home</a>
             <a href="gallery.html">Gallery</a>
@@ -20,18 +19,16 @@
         </nav>
     </header>
 
-    <div id="funny-alert" class="funny-alert">
-        <button class="close-alert" onclick="closeFunnyAlert()">×</button>
-        <h3 id="alert-title">🎉 CONGRATULATIONS!</h3>
-        <p id="alert-message">Nanalo ka ng libreng pagkain!</p>
-        <button onclick="closeFunnyAlert()">INTERESADO AKO!</button>
+    <div id="bawal-tularan" class="bawal-tularan" style="display: none;">
+        <button class="close-alert" onclick="closeBawalTularan()" aria-label="Close notification">&times;</button>
+        <h3 id="bawal-title">CONGRATULATIONS</h3>
+        <p id="bawal-message">May special offer para sa'yo!</p>
+        <button type="button" onclick="closeBawalTularan()">INTERESADO AKO!</button>
     </div>
 
     <section class="hero">
         <p>YOUR PARTY STARTS HERE</p>
-
-        <h1>LETS<br><span>MAKE YOUR DAY EXTRA SPECIAL!</span></h1>
-
+        <h1>LET'S<br><span>MAKE YOUR DAY EXTRA SPECIAL!</span></h1>
         <p>
             Choose your favorite restaurant theme, create your birthday invitation,
             and celebrate with your favorite people!
@@ -73,49 +70,47 @@
         <p class="center">Choose a theme to change the look of your birthday invitation.</p>
 
         <div class="restaurant-list">
-
             <div class="restaurant">
                 <h3>🐝 Jollibee</h3>
                 <p>Sweet celebrations and happy memories!</p>
-                <button onclick="changeTheme('jollibee')">Choose Jollibee</button>
+                <button type="button" onclick="changeTheme('jollibee')">Choose Jollibee</button>
                 <a href="https://www.jollibee.com.ph/" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
             </div>
 
             <div class="restaurant">
                 <h3>🍟 McDonald's</h3>
                 <p>I'm lovin' this birthday celebration!</p>
-                <button onclick="changeTheme('mcdo')">Choose McDonald's</button>
+                <button type="button" onclick="changeTheme('mcdo')">Choose McDonald's</button>
                 <a href="https://www.mcdonalds.com.ph/" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
             </div>
 
             <div class="restaurant">
                 <h3>🍗 Mang Inasal</h3>
                 <p>Grilled goodness for your special day!</p>
-                <button onclick="changeTheme('manginasal')">Choose Mang Inasal</button>
+                <button type="button" onclick="changeTheme('manginasal')">Choose Mang Inasal</button>
                 <a href="https://www.manginasal.ph/" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
             </div>
 
             <div class="restaurant">
                 <h3>🍗 Bonchon</h3>
                 <p>Crunchy bites and a crispy celebration!</p>
-                <button onclick="changeTheme('bonchon')">Choose Bonchon</button>
+                <button type="button" onclick="changeTheme('bonchon')">Choose Bonchon</button>
                 <a href="https://bonchon.com.ph/" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
             </div>
 
             <div class="restaurant">
                 <h3>🍗 KFC</h3>
                 <p>Finger lickin' good birthday moments!</p>
-                <button onclick="changeTheme('kfc')">Choose KFC</button>
+                <button type="button" onclick="changeTheme('kfc')">Choose KFC</button>
                 <a href="https://www.kfc.com.ph/" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
             </div>
 
             <div class="restaurant">
                 <h3>🥡 Chowking</h3>
                 <p>Chinese-style favorites for your party!</p>
-                <button onclick="changeTheme('chowking')">Choose Chowking</button>
+                <button type="button" onclick="changeTheme('chowking')">Choose Chowking</button>
                 <a href="https://www.chowking.ph/" target="_blank" rel="noopener noreferrer">Visit Official Website ↗</a>
             </div>
-
         </div>
     </section>
 
@@ -124,7 +119,6 @@
         <p class="center">Fill in the details and see your invitation preview!</p>
 
         <div class="invitation-layout">
-
             <form id="birthday-form">
                 <label for="birthday-name">Birthday Celebrant</label>
                 <input type="text" id="birthday-name" placeholder="Enter the celebrant's name" required>
@@ -164,13 +158,11 @@
                 <hr>
 
                 <p id="show-message">Come and celebrate this special day with us!</p>
-
                 <p>We hope to see you there! 💗</p>
 
                 <button type="button" onclick="copyInvitation()">Copy Invitation</button>
-                <p id="copy-status"></p>
+                <p id="copy-status" role="status" aria-live="polite"></p>
             </div>
-
         </div>
     </section>
 
@@ -179,47 +171,88 @@
     </footer>
 
     <script>
-        let alertCount = 0;
+        let bawalCount = 0;
+        let bawalTimer = null;
+        let bawalInterval = null;
 
-        const funnyTitles = [
+        const bawalTitles = [
             "🚨 MAY ALAM AKONG MASARAP!",
             "🍗 MALAMAN!",
             "🕵️ MALASA AT MALINAMNAM!",
             "🎁 INTERESADO AKO!"
         ];
 
-        const funnyMessages = [
-          "Gusto mo ng matigas sa labas pero malambot sa loob? Order ka na ng chicken! 😏",
-          "Mas gusto mo ba ng mabilis o mabagal? Sa delivery, siyempre. Pili ka ng express o regular.",
-          "Mahilig ka ba sa malaki? May large bucket kami para sa'yo. Baka hindi mo kayanin ubusin mag-isa. 😭",
-          "Gusto mo bang ulit-ulitin hanggang mabusog ka? Unli rice na 'to, beh. Sulitin mo habang mainit pa."
-];
+        const bawalMessages = [
+            "Gusto mo ng matigas sa labas pero malambot sa loob? Order ka na ng chicken! 😏",
+            "Mas gusto mo ba ng mabilis o mabagal? Sa delivery, siyempre. Pili ka ng express o regular.",
+            "Mahilig ka ba sa malaki? May large bucket kami para sa'yo. Baka hindi mo kayanin ubusin mag-isa. 😭",
+            "Gusto mo bang ulit-ulitin hanggang mabusog ka? Unli rice na 'to. Sulitin mo habang mainit pa."
+        ];
 
         function changeTheme(theme) {
             document.body.className = theme;
         }
 
-        function showIllegalAlert() {
-            const alertBox = document.getElementById("illegal-alert");
+        function closeBawalTularan() {
+            const alertBox = document.getElementById("bawal-tularan");
 
-            if (alertCount < 4) {
-                const randomNumber = Math.floor(Math.random() * funnyMessages.length);
+            if (alertBox) {
+                alertBox.style.display = "none";
+            }
 
-                document.getElementById("alert-title").textContent = funnyTitles[randomNumber];
-                document.getElementById("alert-message").textContent = funnyMessages[randomNumber];
+            clearTimeout(bawalTimer);
+            bawalTimer = null;
+        }
 
-                alertBox.style.display = "block";
-                alertCount++;
-
-                setTimeout(function() {
-                    alertBox.style.display = "none";
-                }, 5000);
+        function stopBawalInterval() {
+            if (bawalInterval !== null) {
+                clearInterval(bawalInterval);
+                bawalInterval = null;
             }
         }
 
-        function closeIllegalAlert() {
-            document.getElementById("illegal-alert").style.display = "none";
+        function showBawalTularan() {
+            const alertBox = document.getElementById("bawal-tularan");
+
+            if (!alertBox || bawalCount >= 4) {
+                stopBawalInterval();
+                return;
+            }
+
+            const randomNumber = Math.floor(Math.random() * bawalMessages.length);
+
+            document.getElementById("bawal-title").textContent =
+                bawalTitles[randomNumber];
+
+            document.getElementById("bawal-message").textContent =
+                bawalMessages[randomNumber];
+
+            alertBox.style.display = "block";
+            bawalCount++;
+
+            clearTimeout(bawalTimer);
+
+            bawalTimer = setTimeout(function() {
+                closeBawalTularan();
+            }, 5000);
+
+            if (bawalCount >= 4) {
+                stopBawalInterval();
+            }
         }
+
+        window.addEventListener("DOMContentLoaded", function() {
+            setTimeout(showBawalTularan, 1500);
+
+            bawalInterval = setInterval(function() {
+                if (bawalCount >= 4) {
+                    stopBawalInterval();
+                    return;
+                }
+
+                showBawalTularan();
+            }, 15000);
+        });
 
         document.getElementById("birthday-form").addEventListener("submit", function(event) {
             event.preventDefault();
@@ -262,21 +295,25 @@
             temporaryTextArea.value = invitationText;
             temporaryTextArea.style.position = "fixed";
             temporaryTextArea.style.left = "-9999px";
+
             document.body.appendChild(temporaryTextArea);
             temporaryTextArea.select();
 
-            const copied = document.execCommand("copy");
+            let copied = false;
+
+            try {
+                copied = document.execCommand("copy");
+            } catch (error) {
+                copied = false;
+            }
+
             document.body.removeChild(temporaryTextArea);
 
             document.getElementById("copy-status").textContent =
-                copied ? "Invitation copied! 💌" : "Please select and copy the invitation text manually.";
+                copied
+                    ? "Invitation copied! 💌"
+                    : "Please select and copy the invitation text manually.";
         }
-
-        setTimeout(showFunnyAlert, 1500);
-
-        setInterval(function() {
-            showFunnyAlert();
-        }, 15000);
     </script>
 
 </body>
